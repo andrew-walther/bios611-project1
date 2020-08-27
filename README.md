@@ -3,7 +3,7 @@ BIOS611-Project1
 
 Test Score Dataset
 ------------------
-This repo will eventually contain an analysis of the Test Score Dataset
+This repo will eventually contain an analysis of the Test Score Dataset.
 
 
 Usage

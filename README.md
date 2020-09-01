@@ -10,9 +10,9 @@ Proposal
 
 Through the formative years of every young student's life, they are often inundated by the task of taking exams to assess knowledge in a variety of subject matter areas. Although few students find taking exams to be an enjoyable tasks, the results are often indicative of one's aptitude for learning. On the outside of every exam experience, a multitude of outside factors can influence student performance aside from the raw education received in the classroom.
 
-Does gender play a significant role in exam performance among different subject areas? Can we predict if a student will perform better on an exam due to their cultural background, the education level of their parents, or wheter or not they took a test prep course prior to taking exams?
+Does gender play a significant role in exam performance among different subject areas? Can we predict if a student will perform better on an exam due to their cultural background, the education level of their parents, or whether or not they took a test prep course prior to taking exams?
 
-In this project, we'll investigate the connections between these factors and the resulting test scores from a publicly avaiable dataset. This analysis will be completed with linear regression modeling and other machine learning techniques that will help to predict a student's test outcome based on their personal background.
+In this project, we'll investigate the connections between these factors and the resulting test scores from a publicly available dataset. This analysis will be completed with linear regression modeling and other machine learning techniques that will help to predict a student's test outcome based on their personal background.
 
 ### Dataset
 
@@ -22,15 +22,15 @@ This Repo will later contain a complete analysis of the aforementioned exam perf
 
 ### Preliminary Figures & Exploratory Data Analysis
 
-![](bios611-project1/figures/hist_avgscore_gender.png)
+#![](bios611-project1/figures/hist_avgscore_gender.png)
 
 The figure above shows that female students tend to score higher on a combined average of the math, reading, and writing exams when compared to male students.
 
-![](bios611-project1/figures/hist_avgscore_testprep.png)
+#![](bios611-project1/figures/hist_avgscore_testprep.png)
 
 The figure above shows that students who did not take a test preparation course scored better than students who did. There are likely some interesting confounding variables that can be explored to find out the true cause. A sort of "survival bias" may also be in play where students who will already do well on tests do not need to take test preparation courses.
 
-![](bios611-project1/figures/math_writing_gender.png)
+#![](bios611-project1/figures/math_writing_gender.png)
 
 The figure above shows that among students with similar reading scores, male students tend to have better math scores than female students. On the other hand, among students with similar math scores, female students tend to have better reading scores than male students.
 

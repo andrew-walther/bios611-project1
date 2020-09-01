@@ -26,7 +26,7 @@ This Repo will later contain a complete analysis of the aforementioned exam perf
 
 The figure above shows that female students tend to score higher on a combined average of the math, reading, and writing exams when compared to male students.
 
-![](bios611-project1/figures/hist_avgscore_testprep.png)
+![](bios611-project1/figures/avgscore_testprep.png)
 
 The figure above shows that students who did not take a test preparation course scored better than students who did. There are likely some interesting confounding variables that can be explored to find out the true cause. A sort of "survival bias" may also be in play where students who will already do well on tests do not need to take test preparation courses.
 

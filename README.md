@@ -22,6 +22,8 @@ This Repo will later contain a complete analysis of the aforementioned exam perf
 
 ### Preliminary Figures & Exploratory Data Analysis
 
+All figures can be found in the "figures" folder as well.
+
 ![](bios611-project1/figures/hist_avgscore_gender.png)
 
 The figure above shows that female students tend to score higher on a combined average of the math, reading, and writing exams when compared to male students.

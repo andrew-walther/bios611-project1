@@ -2,8 +2,6 @@ Project 1 BIOS 611
 ==================
 Test Score Dataset
 ------------------
-Andrew Walther
---------------
 
 Proposal
 --------

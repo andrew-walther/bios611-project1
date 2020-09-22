@@ -62,3 +62,5 @@ The Makefile is an excellent place to look to get a feel for the project.
 To build figures relating to the student test scores for example, enter Bash either via the above incantation or
 with Rstudio and say:
 
+>make figures/hist_avgscore_gender.png
+ 

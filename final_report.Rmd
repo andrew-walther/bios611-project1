@@ -1,0 +1,18 @@
+---
+title: "Indicators of student test performance"
+author: "Andrew Walther"
+date: "10/7/2020"
+output: html_document
+---
+### Introduction
+
+
+
+### Data sets
+
+The data used in this analysis was acquired from Kaggle and is the StudentsPerformance data set. This data set includes demographic information for 1000 students along with test scores on math, reading, and writing exams. Some of the demographic information collected includes: gender, race/ethnicity, parental level of education, free/reduced lunch, and completion of test preparation course. 
+
+
+### Specific Terminology
+
+We compute a metric in this analysis called `avg.score` that is simply the average score for each student across their math, reading, and writing exam scores.

@@ -18,7 +18,7 @@ In this project, we'll investigate the connections between these factors and the
 
 The dataset we will analyze is publicly available on Kaggle and it covers student test score performance metrics for mathematics, reading, and writing tests. The dataset can be downloaded from [](https://www.kaggle.com/spscientist/students-performance-in-exams).
 
-This Repo will later contain a complete analysis of the aforementioned exam performance dataset.
+Note that the aforementioned dataset will be available on the github repository and will not need to be obtained from Kaggle for observation/further analysis.
 
 ### Preliminary Figures & Exploratory Data Analysis
 

@@ -32,9 +32,31 @@ correlation.R:
 demographic_avgscore_regression.R:
 	derived_data/StudentsPerformance.csv
 
+demographic_treemodel.R:
+	source_data/StudentsPerformance.csv
+
 math_gender_regression.R:
 	derived_data/StudentsPerformance.csv
 
 summary_stats.R:
 	derived_data/StudentsPerformance.csv
 
+figures/subjects_gender_box.png:
+	source_data/StudentsPerformance.csv
+
+figures/subjects_testprep_box.png:
+	source_data/StudentsPerformance.csv
+
+test_train_balanced_split.R:
+	source_data/StudentsPerformance.csv
+
+mse_model_summary.R
+	source_data/StudentsPerformance.csv\
+	demographic_avgscore_regression.R\
+	demographic_treemodel.R
+
+box_subjects_gender.R:
+	source_data/StudentsPerformance.csv
+
+boxplot_testprep.R:
+	source_data/StudentsPerformance.csv	

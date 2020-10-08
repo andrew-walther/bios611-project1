@@ -5,3 +5,4 @@ StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans
 
 model_2 <- lm(avg.score ~ gender + race.ethnicity + parental.level.of.education + lunch + test.preparation.course, data=StudentsPerformance)
 summary(model_2)
+plot(model_2, which=c(1,1))

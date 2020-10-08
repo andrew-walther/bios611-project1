@@ -1,8 +1,7 @@
 library(tidyverse)
 library(mosaic)
 
-StudentsPerformance <- 
-  read_csv("source_data/StudentsPerformance.csv");
+StudentsPerformance <- read_csv("source_data/StudentsPerformance.csv");
 
 Performance_Male <- StudentsPerformance %>% filter(gender=='male');
 

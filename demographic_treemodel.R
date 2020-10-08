@@ -1,6 +1,7 @@
 library(tidyverse);
 
-StudentsPerformance <- read.csv("~/bios611-project1/source_data/StudentsPerformance.csv");
+#read in source data
+StudentsPerformance <- read_csv("source_data/StudentsPerformance.csv");
 StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans(StudentsPerformance[,6:8]),2));
 
 #classification tree of gender as response variable with avg.score as the explanatory variables.

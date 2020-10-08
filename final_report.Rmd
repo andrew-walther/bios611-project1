@@ -8,9 +8,15 @@ output:
 ---
 
 ```{r,message=FALSE,warning=FALSE,echo=FALSE}
+set.seed(611)
 library(tidyverse)
 library(mosaic)
+library(gridExtra)
 library(corrplot)
+library(rpart)
+library(rattle)
+library(rpart.plot)
+library(MLmetrics)
 StudentsPerformance <- read.csv("~/bios611-project1/source_data/StudentsPerformance.csv")
 StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans(StudentsPerformance[,6:8]),2))
 ```
@@ -62,7 +68,29 @@ Count | 1000 (482, 518) | 1000 (482, 518) | 1000 (482, 518)
 
 Since 1000 students exam results were recorded, the mean and median score for each test ended up being approximately the same and at least one student scored a perfect 100 on each of the three exams. The reading exam had the highest average score, followed by the writing exam, and the math exam had the lowest average score. It is slightly surprising how similar the mean, median, and quartile scores are between the three exams and it raises the question of whether or not the scores were normalized to be on the same scale between each of the three exams even if one of the exams was more challenging in reality.
 
+In the graphic below, it is apparent that male students typically score higher than females on the math test, but females score higher than males on both the reading and writing tests.
 
+```{r,echo=FALSE}
+#math scores by gender
+math_gender <- ggplot(StudentsPerformance, aes(math.score,color=gender)) + geom_boxplot() + xlab("Math Score") + ggtitle("Math Scores by Gender")
+#reading scores by gender
+reading_gender <- ggplot(StudentsPerformance, aes(reading.score,color=gender)) + geom_boxplot() + xlab("Reading Score") + ggtitle("Reading Scores by Gender")
+#writing scores by gender
+writing_gender <- ggplot(StudentsPerformance, aes(writing.score,color=gender)) + geom_boxplot() + xlab("Writing Score") + ggtitle("Writing Scores by Gender")
+grid.arrange(math_gender,reading_gender,writing_gender, ncol=1, nrow=3)
+```
+
+In the series of box plots below, it is very clear that students that complete a test prep course score higher than those who do not on the tests for each of the three subjects (math, reading, and writing).
+
+```{r,echo=FALSE}
+#math scores by test prep
+math_prep <- ggplot(StudentsPerformance, aes(math.score,color=test.preparation.course)) + geom_boxplot() + xlab("Math Score") + ggtitle("Math Scores by Test Prep")
+#reading scores by test prep
+reading_prep <- ggplot(StudentsPerformance, aes(reading.score,color=test.preparation.course)) + geom_boxplot() + xlab("Reading Score") + ggtitle("Reading Scores by Test Prep")
+#writing scores by test prep
+writing_prep <- ggplot(StudentsPerformance, aes(writing.score,color=test.preparation.course)) + geom_boxplot() + xlab("Writing Score") + ggtitle("Writing Scores by Test Prep")
+grid.arrange(math_prep,reading_prep,writing_prep, ncol=1, nrow=3)
+```
 
 ### Regression model to distinguish examine scores by gender
 
@@ -86,28 +114,48 @@ corrplot.mixed(M)
 
 ### Regression model with demographic predictors
 
-We're really interested in modeling how students score on the exams when the only predictors that are used are the demographic information given along with the three test scores (math, reading, & writing). These demographic factors are the student's gender, their race/ethnicity, the highest level of education that their parents completed, whether or not they have free/reduced lunch at school, and whether or not their completed a test preparation course before taking the exams. By only considering the demographic variables, we're ignoring any potential confounding information from performance on other exams. Additionally, we can just try to model the average score of each student between the three exams combined. In the linear model output where "average score" is the model response, we see that gender, ethnicity (D), ethnicity (E), education (high school), education (master's degree), education (some high school), lunch, and test prep course are all significant predictors of a student's average score. the intercept for this model is a score of 66.9 and the model coefficient for no test prep course is -7.6. This coefficient indicates that, based on this regression model, a student who does not complete a test preparation course is predicted to score over 7 points fewer than a student who does complete a test prep course. This is an interesting takeaway from a simple regression model and it may provide evidence to suggest that students should invest their time and resources into taking a course to prepare before taking importnat exams. Unfortunately, we might not be able to trust this model too much since the adjusted R-squared value of 0.233 means that only about 23% of the variation in the response (average score) data is accounted for by the model. Interestingly enough, if we check out the residual plot for this regression model, we find that the model is actually in agreement with the assumptions required of linear regression since the residuals are normally distributed and show no signs of heteroscedasticity.
+We're really interested in modeling how students score on the exams when the only predictors that are used are the demographic information given along with the three test scores (math, reading, & writing). These demographic factors are the student's gender, their race/ethnicity, the highest level of education that their parents completed, whether or not they have free/reduced lunch at school, and whether or not their completed a test preparation course before taking the exams. By only considering the demographic variables, we're ignoring any potential confounding information from performance on other exams. Additionally, we can just try to model the average score of each student between the three exams combined. In the linear model output where "average score" is the model response, we see that gender, ethnicity (D), ethnicity (E), education (high school), education (master's degree), education (some high school), lunch, and test prep course are all significant predictors of a student's average score. the intercept for this model is a score of 66.9 and the model coefficient for no test prep course is -7.6. This coefficient indicates that, based on this regression model, a student who does not complete a test preparation course is predicted to score over 7 points fewer than a student who does complete a test prep course. This is an interesting takeaway from a simple regression model and it may provide evidence to suggest that students should invest their time and resources into taking a course to prepare before taking importnat exams. Unfortunately, we might not be able to trust this model too much since the adjusted R-squared value of 0.233 means that only about 23% of the variation in the response (average score) data is accounted for by the model. Interestingly enough, if we check out the residual plot for this regression model, we find that the model is actually in agreement with the assumptions required of linear regression since the residuals are normally distributed and show no signs of heteroscedasticity. Finally, when we make predictions on data set aside for testing, we get a Mean Squared Error on the predictions of 258.59.
 
 ```{r,echo=FALSE}
-model_2 <- lm(avg.score ~ gender + race.ethnicity + parental.level.of.education + lunch + test.preparation.course, data=StudentsPerformance)
-summary(model_2)
-plot(model_2, which=c(1,1))
+#creates training and testing data sets from the full student performance data set (20% test, 80% train)
+test_id <- sample(1:nrow(StudentsPerformance), size=round(0.2*nrow(StudentsPerformance)))
+TEST <- StudentsPerformance[test_id,]
+TRAIN <- StudentsPerformance[-test_id,]
 ```
 
+```{r,echo=FALSE}
+#regression model with demographic factors
+model_2 <- lm(avg.score ~ gender + race.ethnicity + parental.level.of.education + lunch + test.preparation.course, data=StudentsPerformance)
+summary(model_2)
+#make predictions with testing data on model
+pr.lm <- predict(model_2, TEST)
+plot(model_2, which=c(1,1))
+#calculate MSE for predictions
+MSE(pr.lm, StudentsPerformance$avg.score)
+score_Predictions <- TEST %>% mutate(pr.lm = pr.lm)
+```
 
 ### Decision tree to predict average exam score from demographic factors
 
+Another option to predict a student's average test score based on all of the demographic factors provided is with a decision tree. In the decision tree below, we can see that the students are first separated based on if they qualify for free/reduced lunch, then by if they took a test preparation course, and finally by gender. We can see that students with the lowest predicted scores (59) qualify for free/reduced lunch and did not take a test prep course. Both of these factors can serve as a proxy for socioeconomic status where we see that students who are less well off are not able to afford lunch and also do not take test prep courses. This is associated with lower scores on their exams. On the other hand, we see that students who do not qualify for free/reduced lunch and who did take a test prep course are predicted to have the highest average scores at 75 points. The predictions for this decision tree model returned a mean squared error value of 229.75. Compared to the multiple regression model with demographic predictors, the decision tree had a slightly smaller MSE from the model predictions.
 
-
-
+```{r,message=FALSE,warning=FALSE,echo=FALSE}
+#classification tree of gender as response variable with avg.score as the explanatory variables.
+tree <- rpart(avg.score~gender + lunch + test.preparation.course, data=TRAIN)
+pr.tree <- predict(tree, newdata=TEST)
+fancyRpartPlot(tree)
+MSE(pr.tree, StudentsPerformance$avg.score)
+score_Predictions <- score_Predictions %>% mutate(pr.tree = pr.tree)
+```
 
 ### Conclusions
 
--conclusions from EDA & Modeling
+In this analysis of the student test performance dataset, we set out to investigate if there is an association between gender and test performance and whether or not we could make viable predictions of exam scores for students based on some provided background demographic information. We first found that when we consider the math exam, for a given pair of reading & writing scores, male students are predicted to score about 13 points higher on the math test than female students. On the other hand, for a given math score, when we compare males and females on the reading and writing tests, female students score significantly higher than male students. These conclusions were made based off of the results of a multiple linear regression model.
 
+Our primary interest was if we can predict scores based off demographic data that is provided for each student that took the exams. We built another multiple linear regression model and a decision tree model to train and make predictions on where we "threw the kitchen sink" of the demographic variables in the dataset at the models. In the regression model, all of the demographic predictors were significant toward predicting the response of average score, but only lunch, test prep, and gender were significant for the decision tree prediction model. An interesting takeaway from both models is that students who have free/reduced lunch and who do not complete a test prep course are predicted to score significantly lower than students who have standard lunch and who do take a test prep course. Additionally, students whose parents do not have a bachelor's degree or higher are also predicted to score lower on average than students whose parents have a college and/or graduate degree. These factors all could be considered proxies for socioeconomic status, so we're really seeing that students with lower socioeconomic status, are on average projected to have lower test scores. This obviously raises an alarm to make sure that underprivileged students aren't left behind in their academic pursuits.
 
 ### Future Ideas
 
-The dataset used in this analysis didn’t provide much information about students who took the exams. In addition, we found that the 3 exam scores reported for each student were strongly correlated with each other, essentially relegating us to a single numeric response in the average score. Going forward, it would be interesting to take advantage of a much large set of data, like demographic & performance metrics for students who take the ACT & SAT each year. Some additional factors that could make further analysis interesting are: student age, household income, hometown or state of residence, hours spent preparing for a particular exam, and coursework grade point average, among others.  
+This analysis ended up providing some interesting insights on the exam score dataset. Its interesting how there is such a wide gap in average performance on the three exams, where males perform better on math and females are much better performers on writing and reading. Additionally, regression & decision tree models are able to predict a student's average score based on demographic data. We found that the 3 exam scores reported for each student were strongly correlated with each other, essentially relegating us to a single numeric response in the average score. Going forward, it would be interesting to take advantage of a much large set of data, like demographic & performance metrics for students who take the ACT & SAT each year. Some additional factors that could make further analysis interesting are: student age, household income, hometown or state of residence, hours spent preparing for a particular exam, and coursework grade point average, among others.  
 
 Given more information about a student’s background and potential aptitude for an exam, it would be interesting to work on building a prediction model using variables like parental education, household income, GPA in coursework, and hours spent studying to determine if these factors can be used as valid predictors of a student’s outcome on an exam. This could be a simple as a multiple regression model or as complex as a deep learning neural network, depending on how clear of a pattern there might be in the data. Additionally, if data from the SAT or ACT exams is considered, it would be very interesting to record data regarding a student’s future in higher education like: institution attended, rank of institution attended, selected academic major, undergraduate GPA, and grades across different disciplines that can be related back to scoring in various portions of the SAT/ACT exam to determine if a test score is a good benchmark for past performance (in high school) and a strong indicator of future aptitude for success in university coursework. For example, does a high math score on the ACT translate into a student electing to be a math or statistics major and have success in that particular area of coursework?

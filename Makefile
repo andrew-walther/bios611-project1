@@ -19,3 +19,22 @@ clean:
 	rm -f figures/*.png
 	rm -f figures/*.pdf
 	rm -f final_report.pdf
+
+tidy_data.R:
+	source_data/StudentsPerformance.csv
+
+derived_data/StudentsPerformance.csv:
+	source_data/StudentsPerformance.csv
+
+correlation.R:
+	derived_data/StudentsPerformance.csv
+
+demographic_avgscore_regression.R:
+	derived_data/StudentsPerformance.csv
+
+math_gender_regression.R:
+	derived_data/StudentsPerformance.csv
+
+summary_stats.R:
+	derived_data/StudentsPerformance.csv
+

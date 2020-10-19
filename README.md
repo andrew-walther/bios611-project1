@@ -28,7 +28,7 @@ All figures can be found in the "figures" folder as well.
 
 The figure above shows that female students tend to score higher on a combined average of the math, reading, and writing exams when compared to male students.
 
-![](figures/avgscore_testprep.png)
+![](figures/averagescore_testprep.png)
 
 The figure above shows that students who did not take a test preparation course scored better than students who did. There are likely some interesting confounding variables that can be explored to find out the true cause. A sort of "survival bias" may also be in play where students who will already do well on tests do not need to take test preparation courses.
 
@@ -64,3 +64,8 @@ with Rstudio and say:
 
 	>make figures/hist_avgscore_gender.png
  
+ You can also build the final report by simply entering the following command into the terminal:
+ 
+  >make report.pdf
+  
+  If you encounter errors when building the report, a finalized pdf version of the project report can also be found in the github repository titled "report.pdf".

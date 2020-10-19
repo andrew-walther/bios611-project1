@@ -9,7 +9,8 @@ figures/math_writing_gender.png:
 SHELL: /bin/bash
 
 final_report.pdf:\
-	final_report.Rmd\
+ final_report.Rmd\
+	Rscript -e "rmarkdown::render('final_report.Rmd',output_format='pdf_document')"
 	
 
 

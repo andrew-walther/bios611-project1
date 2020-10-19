@@ -66,6 +66,6 @@ with Rstudio and say:
  
  You can also build the final report by simply entering the following command into the terminal:
  
-  >make report.pdf
+  >make final_report_update.pdf
   
-  If you encounter errors when building the report, a finalized pdf version of the project report can also be found in the github repository titled "report.pdf".
+  If you encounter errors when building the report, a finalized pdf version of the project report can also be found in the github repository titled "final_report_update.pdf".

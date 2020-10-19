@@ -1,8 +1,9 @@
 library(tidyverse);
 library(gridExtra);
 
-StudentsPerformance <- 
-  read_csv("source_data/StudentsPerformance.csv");
+#StudentsPerformance <- read.csv("~/bios611-project1/source_data/StudentsPerformance.csv");
+
+StudentsPerformance <- read_csv("source_data/StudentsPerformance.csv");
 
 #math scores by test prep
 math_prep <- ggplot(StudentsPerformance, aes(math.score,color=test.preparation.course)) + geom_boxplot() + xlab("Math Score") + ggtitle("Math Scores by Test Prep");
@@ -14,4 +15,13 @@ reading_prep <- ggplot(StudentsPerformance, aes(reading.score,color=test.prepara
 writing_prep <- ggplot(StudentsPerformance, aes(writing.score,color=test.preparation.course)) + geom_boxplot() + xlab("Writing Score") + ggtitle("Writing Scores by Test Prep");
 
 grid.arrange(math_prep,reading_prep,writing_prep, ncol=1, nrow=3);
-ggsave("figures/subjects_testprep_box.png",plot=p)
+
+#save image to file  
+p <- arrangeGrob(math_prep,reading_prep,writing_prep, ncol=1, nrow=3);
+#ggsave("figures/subjects_testprep_box.png",plot=p)
+#setwd("~/bios611-project1/figures");
+setwd("~/figures");
+getwd();
+png(filename = "boxplot_testprep.png");
+plot(p);
+dev.off()

@@ -7,9 +7,9 @@ StudentsPerformance <-
 #add average score column
 StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans(StudentsPerformance[,6:8]),2));
 
-#distribution of average
-p <- ggplot(StudentsPerformance, aes(x=avg.score, color=gender)) +
+#histogram of average scores separated by yes/no test prep course
+p <- ggplot(StudentsPerformance, aes(x=avg.score, color=test.preparation.course)) +
   geom_histogram(fill="white", alpha=0.3, position="identity") +
-  labs(title = 'Histogram of average exam score by gender',x='Average score from three exams');
+  labs(title = 'Histogram of average exam score by test prep course',x='Average score from three exams');
 
 ggsave("figures/averagescore_testprep.png",plot=p)

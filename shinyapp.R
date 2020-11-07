@@ -10,6 +10,10 @@
 
 library(shiny)
 library(tidyverse)
+
+args <- commandArgs(trailingOnly=T);
+port <- as.numeric(args[[1]]);
+
 #StudentsPerformance <- read.csv("~/OneDrive - University of North Carolina at Chapel Hill/UNC - Fall 2020/BIOS 611 - Toups/Project 1/StudentsPerformance.csv");
 StudentsPerformance <- read_csv("source_data/StudentsPerformance.csv");
 StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans(StudentsPerformance[,6:8]),2));
@@ -124,5 +128,5 @@ server <- function(input, output) {
 ##################################################################
 
 # Run the application 
-shinyApp(ui = ui, server = server)
-
+print(sprintf("Starting shiny on port %d", port));
+shinyApp(ui = ui, server = server, options = list(port = 8788, host = "0.0.0.0"))

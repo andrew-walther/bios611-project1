@@ -55,7 +55,7 @@ Then, connect to the machine on port 8787.
 After that, you can view/edit the project in RStudio!
 
 Makefile
-========
+--------
 
 The Makefile is an excellent place to look to get a feel for the project.
 
@@ -69,3 +69,19 @@ with Rstudio and say:
   >make final_report_update.pdf
   
   If you encounter errors when building the report, a finalized pdf version of the project report can also be found in the github repository titled "final_report_update.pdf".
+
+Shiny App
+---------
+
+To get a better feel for some of the test score data, you can open up the R shiny app and check out some interactive visualizations.
+
+This application includes boxplots that will allow you to look deeper into the different subsets of score data along the lines of gender and test preparation. Additionally, a histogram allows for investigation into how many bins are needed to accurately depict the distribution of each student's average exam score.
+
+To run RSS, say this
+
+  > docker run -v `pwd`:/home/rstudio -e PASSWORD=$SECRET_PWD -p 8787:8787 -p 8788:8788 -t l17
+  
+To run the shiny app, open Rstudio and type the following line into the terminal:
+
+  > PORT=8788 make test_score_app
+  

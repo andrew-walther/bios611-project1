@@ -11,9 +11,9 @@
 library(shiny)
 library(tidyverse)
 #StudentsPerformance <- read.csv("~/OneDrive - University of North Carolina at Chapel Hill/UNC - Fall 2020/BIOS 611 - Toups/Project 1/StudentsPerformance.csv");
-StudentsPerformance <- read_csv("source_data/StudentsPerformance.csv");
-StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans(StudentsPerformance[,6:8]),2));
-
+#StudentsPerformance <- read_csv("source_data/StudentsPerformance.csv");
+#StudentsPerformance <- StudentsPerformance %>% mutate(avg.score = round(rowMeans(StudentsPerformance[,6:8]),2));
+StudentsPerformance <- read_csv("derived_data/average_scores.csv")
 ##################################################################
 #layout
 

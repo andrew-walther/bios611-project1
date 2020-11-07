@@ -9,6 +9,14 @@ figures/math_writing_gender.png:
 .PHONY: clean
 SHELL: /bin/bash
 
+#Shiny app
+.PHONY: test_score_app
+test_score_app:
+ derived_data/average_scores.csv\
+ source_data/StudentsPerformance.csv\
+ tidy_data.R\
+	Rscript shinyapp.R ${PORT}
+
 #Build the final report
 final_report_update.pdf:\
  final_report_update.Rmd\

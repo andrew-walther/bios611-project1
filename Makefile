@@ -16,7 +16,12 @@ test_score_app:
  source_data/StudentsPerformance.csv\
  tidy_data.R\
 	Rscript shinyapp.R ${PORT}
-
+	
+#python addition: letter grade distribution
+figures/testprep_grade_dist.png:
+ source_data/StudentsPerformance.csv\
+	python grade_dist.py
+	
 #Build the final report
 final_report_update.pdf:\
  final_report_update.Rmd\
@@ -25,6 +30,17 @@ final_report_update.pdf:\
  figures/correlation.png\
  figures/regression_residualplot.png\
  figures/decisiontree.png\
+	Rscript -e "rmarkdown::render('final_report_update.Rmd',output_format='pdf_document')"
+	
+#Build the final report w/python
+final_report_update_python.pdf:\
+ final_report_update_python.Rmd\
+ figures/subjects_gender_box.png\
+ figures/boxplot_testprep.png\
+ figures/correlation.png\
+ figures/regression_residualplot.png\
+ figures/decisiontree.png\
+ figures/testprep_grade_dist.png\
 	Rscript -e "rmarkdown::render('final_report_update.Rmd',output_format='pdf_document')"
 	
 #clean repository of artifacts

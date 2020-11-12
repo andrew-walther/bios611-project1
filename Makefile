@@ -14,12 +14,12 @@ SHELL: /bin/bash
 test_score_app:
  derived_data/average_scores.csv\
  source_data/StudentsPerformance.csv\
- tidy_data.R\
+ tidy_data.R
 	Rscript shinyapp.R ${PORT}
 	
 #python addition: letter grade distribution
 figures/testprep_grade_dist.png:
- source_data/StudentsPerformance.csv\
+ source_data/StudentsPerformance.csv
 	python grade_dist.py
 	
 #Build the final report
@@ -29,7 +29,7 @@ final_report_update.pdf:\
  figures/boxplot_testprep.png\
  figures/correlation.png\
  figures/regression_residualplot.png\
- figures/decisiontree.png\
+ figures/decisiontree.png
 	Rscript -e "rmarkdown::render('final_report_update.Rmd',output_format='pdf_document')"
 	
 #Build the final report w/python
@@ -40,7 +40,7 @@ final_report_update_python.pdf:\
  figures/correlation.png\
  figures/regression_residualplot.png\
  figures/decisiontree.png\
- figures/testprep_grade_dist.png\
+ figures/testprep_grade_dist.png
 	Rscript -e "rmarkdown::render('final_report_update.Rmd',output_format='pdf_document')"
 	
 #clean repository of artifacts
